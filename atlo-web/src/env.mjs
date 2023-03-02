@@ -24,6 +24,7 @@ const server = z.object({
   DISCORD_CLIENT_SECRET: z.string(),
   UPSTASH_REDIS_URL: z.string().url(),
   UPSTASH_REDIS_TOKEN: z.string(),
+  HUGGINGFACE_TOKEN: z.string().min(1),
 });
 
 /**
@@ -50,6 +51,7 @@ const processEnv = {
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
   UPSTASH_REDIS_URL: process.env.UPSTASH_REDIS_URL,
   UPSTASH_REDIS_TOKEN: process.env.UPSTASH_REDIS_TOKEN,
+  HUGGINGFACE_TOKEN: process.env.HUGGINGFACE_TOKEN,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
