@@ -5,9 +5,17 @@ import {
   type DefaultSession,
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "src/env.mjs";
-import { prisma } from "src/server/db";
+import { Redis } from "@upstash/redis";
+import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
+
+/**
+ * Upstash Redis initialization.
+ */
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_URL,
+  token: process.env.UPSTASH_REDIS_TOKEN,
+});
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -45,7 +53,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  adapter: PrismaAdapter(prisma),
+  adapter: UpstashRedisAdapter(redis),
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
